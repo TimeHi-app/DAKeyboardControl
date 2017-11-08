@@ -44,19 +44,19 @@ static char UIViewKeyboardOpened;
 {
     // Swizzle the 'addSubview:' method to ensure that all input fields
     // have a valid inputAccessoryView upon addition to the view heirarchy
-    SEL originalSelector = @selector(addSubview:);
-    SEL swizzledSelector = @selector(swizzled_addSubview:);
-    Method originalMethod = class_getInstanceMethod(self, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(self, swizzledSelector);
-    class_addMethod(self,
-					originalSelector,
-					class_getMethodImplementation(self, originalSelector),
-					method_getTypeEncoding(originalMethod));
-	class_addMethod(self,
-					swizzledSelector,
-					class_getMethodImplementation(self, swizzledSelector),
-					method_getTypeEncoding(swizzledMethod));
-    method_exchangeImplementations(originalMethod, swizzledMethod);
+//    SEL originalSelector = @selector(addSubview:);
+//    SEL swizzledSelector = @selector(swizzled_addSubview:);
+//    Method originalMethod = class_getInstanceMethod(self, originalSelector);
+//    Method swizzledMethod = class_getInstanceMethod(self, swizzledSelector);
+//    class_addMethod(self,
+//                    originalSelector,
+//                    class_getMethodImplementation(self, originalSelector),
+//                    method_getTypeEncoding(originalMethod));
+//    class_addMethod(self,
+//                    swizzledSelector,
+//                    class_getMethodImplementation(self, swizzledSelector),
+//                    method_getTypeEncoding(swizzledMethod));
+//    method_exchangeImplementations(originalMethod, swizzledMethod);
 }
 
 #pragma mark - Public Methods
@@ -552,29 +552,29 @@ static char UIViewKeyboardOpened;
 
 - (void)swizzled_addSubview:(UIView *)subview
 {
-    if (!subview.inputAccessoryView)
-    {
-        if ([subview isKindOfClass:[UITextField class]])
-        {
-            UITextField *textField = (UITextField *)subview;
-            if ([textField respondsToSelector:@selector(setInputAccessoryView:)])
-            {
-                UIView *nullView = [[UIView alloc] initWithFrame:CGRectZero];
-                nullView.backgroundColor = [UIColor clearColor];
-                textField.inputAccessoryView = nullView;
-            }
-        }
-        else if ([subview isKindOfClass:[UITextView class]]) {
-            UITextView *textView = (UITextView *)subview;
-            if ([textView respondsToSelector:@selector(setInputAccessoryView:)] && [textView respondsToSelector:@selector(isEditable)] && textView.isEditable)
-            {
-                UIView *nullView = [[UIView alloc] initWithFrame:CGRectZero];
-                nullView.backgroundColor = [UIColor clearColor];
-                textView.inputAccessoryView = nullView;
-            }
-        }
-    }
-    [self swizzled_addSubview:subview];
+//    if (!subview.inputAccessoryView)
+//    {
+//        if ([subview isKindOfClass:[UITextField class]])
+//        {
+//            UITextField *textField = (UITextField *)subview;
+//            if ([textField respondsToSelector:@selector(setInputAccessoryView:)])
+//            {
+//                UIView *nullView = [[UIView alloc] initWithFrame:CGRectZero];
+//                nullView.backgroundColor = [UIColor clearColor];
+//                textField.inputAccessoryView = nullView;
+//            }
+//        }
+//        else if ([subview isKindOfClass:[UITextView class]]) {
+//            UITextView *textView = (UITextView *)subview;
+//            if ([textView respondsToSelector:@selector(setInputAccessoryView:)] && [textView respondsToSelector:@selector(isEditable)] && textView.isEditable)
+//            {
+//                UIView *nullView = [[UIView alloc] initWithFrame:CGRectZero];
+//                nullView.backgroundColor = [UIColor clearColor];
+//                textView.inputAccessoryView = nullView;
+//            }
+//        }
+//    }
+//    [self swizzled_addSubview:subview];
 }
 
 #pragma mark - Property Methods
